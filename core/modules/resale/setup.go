@@ -2,6 +2,10 @@ package resale
 
 import (
 	databaseQuery "github.com/wecercle/test-devjr-fullstack-cercle/core/database/postgres/query/sqlc"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/application/mapper"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/application/usecase"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/infrastructure/repository/persistence/postgres/pgcommand"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/infrastructure/repository/persistence/postgres/pgquery"
 	resalehttp "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/presentation/http"
 )
 
@@ -12,10 +16,17 @@ type Container struct {
 
 // Setup inicializa o módulo Resale com dependency injection manual
 func Setup(querier *databaseQuery.Queries) *Container {
-	_ = querier
+	// Infrastructure Layer
+	queryRepo := pgquery.NewOrderQueryRepository(querier)
+	commandRepo := pgcommand.NewOrderCommandRepository(querier)
 
-	// Dummy handler while module implementation is pending.
-	handler := resalehttp.NewHandler()
+	// Application Layer
+	orderMapper := mapper.NewOrderItemMapper()
+	listUseCase := usecase.NewListOrderItemsUseCase(queryRepo, orderMapper)
+	cancelUseCase := usecase.NewCancelOrderItemUseCase(queryRepo, commandRepo)
+
+	// Presentation Layer
+	handler := resalehttp.NewHandler(listUseCase, cancelUseCase)
 
 	return &Container{Handler: handler}
 }

@@ -137,6 +137,29 @@ INSERT INTO cercle_test.resale_order (
     '264.99', -- amount_total
     '2026-06-13 18:20:10.000000', -- created_at
     '2026-06-13 18:21:00.000000' -- updated_at
+), (
+    '66666666-6666-6666-6666-666666666666', -- id
+    '550e8400-e29b-41d4-a716-446655440003', -- fk_retailer_id (SPORTS STORE)
+    '1e4a949c-b05c-4778-aeaa-a027ff3d7752', -- fk_users_id (Helena Nogueira)
+    'or_PaidManualTest1', -- external_id
+    'PAID-2026-00006', -- code
+    '2026-06-17 17:35:00', -- date
+    'PAID', -- current_status
+    '04538000', -- delivery_address_zip_code
+    'Avenida Paulista', -- delivery_address_street
+    '1000', -- delivery_address_number
+    'Bela Vista', -- delivery_address_district
+    'São Paulo', -- delivery_address_city
+    'SP', -- delivery_address_state
+    'BR', -- delivery_address_country
+    'Helena Nogueira', -- delivery_address_receiver_name
+    'pagamento-aprovado', -- payment_status
+    '199.90', -- amount_subtotal
+    '19.90', -- amount_freight
+    '0.00', -- amount_interest
+    '219.80', -- amount_total
+    '2026-06-17 17:35:00.000000', -- created_at
+    '2026-06-17 17:35:00.000000' -- updated_at
 ) ON CONFLICT (id) DO NOTHING;
 
 

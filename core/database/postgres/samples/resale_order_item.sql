@@ -89,5 +89,17 @@ INSERT INTO cercle_test.resale_order_item (
     '2026-06-17 18:20:20', -- created_at
     '2026-06-17 18:21:00', -- updated_at
     NULL -- delivered_at
+), (
+    '77777777-7777-7777-7777-777777777777', -- id
+    '66666666-6666-6666-6666-666666666666', -- fk_resale_order_id (PAID-2026-00006)
+    'PAIDITEM-001', -- sku
+    'Item Pago para Teste Manual', -- name
+    1, -- quantity
+    '199.90', -- amount_value
+    'BRPDM1001', -- shipping_code
+    'LABEL_GENERATED', -- shipping_status
+    '2026-06-17 17:35:00', -- created_at
+    '2026-06-17 17:35:00', -- updated_at
+    NULL -- delivered_at
 )
 ON CONFLICT (id) DO NOTHING;
