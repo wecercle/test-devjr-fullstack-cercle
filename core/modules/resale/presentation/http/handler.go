@@ -1,15 +1,26 @@
 package http
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/application/usecase"
+	domainException "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/domain/exception"
 	httpresponse "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/presentation/http/response"
 )
 
-type Handler struct{}
+type Handler struct {
+	getOrderItemsUseCase *usecase.GetOrderItemsUseCase
+	cancelOrderItemUseCase *usecase.CancelOrderItemUseCase
+}
 
-func NewHandler() *Handler { return &Handler{} }
+func NewHandler(getOrderItemsUseCase *usecase.GetOrderItemsUseCase, cancelOrderItemUseCase *usecase.CancelOrderItemUseCase) *Handler {
+	return &Handler{
+		getOrderItemsUseCase:    getOrderItemsUseCase,
+		cancelOrderItemUseCase:  cancelOrderItemUseCase,
+	}
+}
 
 // GetOrderItemsByCPFAndOrderID godoc
 // @Summary List order items by CPF and order ID
@@ -25,7 +36,20 @@ func NewHandler() *Handler { return &Handler{} }
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /v1/app/users/{cpf}/orders/{order_id}/items [get]
 func (h *Handler) GetOrderItemsByCPFAndOrderID(c *gin.Context) {
-	httpresponse.Success(c, http.StatusOK, "TODO: /v1/app/users/:cpf/orders/:order_id/items")
+	cpf := c.Param("cpf")
+	orderID := c.Param("order_id")
+
+	result, err := h.getOrderItemsUseCase.Execute(c.Request.Context(), cpf, orderID)
+	if err != nil {
+		if isResaleValidationError(err) {
+			httpresponse.DomainBadRequest(c, err)
+			return
+		}
+		httpresponse.InternalServerError(c, err.Error())
+		return
+	}
+
+	httpresponse.Success(c, http.StatusOK, result.Data)
 }
 
 // CancelOrderItem godoc
@@ -37,11 +61,36 @@ func (h *Handler) GetOrderItemsByCPFAndOrderID(c *gin.Context) {
 // @Param cpf path string true "User CPF (digits only, 11 characters)"
 // @Param order_id path string true "Order ID (UUID)"
 // @Param item_id path string true "Order Item ID (UUID)"
-// @Success 200 {object} map[string]interface{} "Item cancelled successfully"
+// @Success 204 "Item cancelled successfully or already returned"
 // @Failure 400 {object} map[string]string "Bad request"
 // @Failure 404 {object} map[string]string "Order or item not found"
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /v1/app/users/{cpf}/orders/{order_id}/items/{item_id}/cancel [put]
 func (h *Handler) CancelOrderItem(c *gin.Context) {
-	httpresponse.Success(c, http.StatusOK, "TODO: /v1/app/users/:cpf/orders/:order_id/items/:item_id/cancel")
+	cpf := c.Param("cpf")
+	orderID := c.Param("order_id")
+	itemID := c.Param("item_id")
+
+	err := h.cancelOrderItemUseCase.Execute(c.Request.Context(), cpf, orderID, itemID)
+	if err != nil {
+		if isResaleValidationError(err) {
+			httpresponse.DomainBadRequest(c, err)
+			return
+		}
+		if errors.Is(err, domainException.ErrOrderItemNotFound) || errors.Is(err, domainException.ErrOrderNotFound) {
+			httpresponse.DomainNotFound(c, err)
+			return
+		}
+		httpresponse.InternalServerError(c, err.Error())
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}
+
+func isResaleValidationError(err error) bool {
+	return errors.Is(err, domainException.ErrInvalidOrderID) ||
+		errors.Is(err, domainException.ErrInvalidItemID) ||
+		errors.Is(err, domainException.ErrInvalidCPF) ||
+		errors.Is(err, domainException.ErrReturnWindowExpired)
 }
