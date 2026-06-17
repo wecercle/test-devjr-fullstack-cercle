@@ -7,9 +7,9 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
-	databaseQuery "github.com/wecercle/cercle-test-devjr/core/database/postgres/query/sqlc"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/aggregate"
-	domainException "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/exception"
+	databaseQuery "github.com/wecercle/test-devjr-fullstack-cercle/core/database/postgres/query/sqlc"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/aggregate"
+	domainException "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/exception"
 )
 
 type RetailerCommandRepository struct {

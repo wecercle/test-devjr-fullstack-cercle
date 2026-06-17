@@ -2,7 +2,7 @@ package validate
 
 import (
 	"github.com/google/uuid"
-	domainException "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/exception"
+	domainException "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/exception"
 )
 
 func ValidateRetailerID(id string) error {

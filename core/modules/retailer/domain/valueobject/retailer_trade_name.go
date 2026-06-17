@@ -1,7 +1,7 @@
 package valueobject
 
 import (
-	domainException "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/exception"
+	domainException "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/exception"
 )
 
 const (

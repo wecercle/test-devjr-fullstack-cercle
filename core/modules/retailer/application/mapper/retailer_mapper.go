@@ -1,8 +1,8 @@
 package mapper
 
 import (
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/dto/output"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/aggregate"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/dto/output"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/aggregate"
 )
 
 type RetailerMapper struct{}

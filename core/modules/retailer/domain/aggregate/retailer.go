@@ -3,9 +3,9 @@ package aggregate
 import (
 	"time"
 
-	domainException "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/exception"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/valueobject"
-	sharedValueobject "github.com/wecercle/cercle-test-devjr/core/modules/shared/domain/valueobject"
+	domainException "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/exception"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/valueobject"
+	sharedValueobject "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/domain/valueobject"
 )
 
 type Retailer struct {

@@ -3,7 +3,7 @@ package query
 import (
 	"context"
 
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/aggregate"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/aggregate"
 )
 
 // RetailerQueryRepository define a interface de repositório de consulta para o agregado Retailer.

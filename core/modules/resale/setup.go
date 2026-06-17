@@ -1,8 +1,8 @@
 package resale
 
 import (
-	databaseQuery "github.com/wecercle/cercle-test-devjr/core/database/postgres/query/sqlc"
-	resalehttp "github.com/wecercle/cercle-test-devjr/core/modules/resale/presentation/http"
+	databaseQuery "github.com/wecercle/test-devjr-fullstack-cercle/core/database/postgres/query/sqlc"
+	resalehttp "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/presentation/http"
 )
 
 // Container agrupa as dependências do módulo Resale

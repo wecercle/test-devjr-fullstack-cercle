@@ -2,9 +2,9 @@ package app
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wecercle/cercle-test-devjr/core/database/connection"
-	"github.com/wecercle/cercle-test-devjr/core/modules/resale"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/database/connection"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer"
 )
 
 type Routes struct{}

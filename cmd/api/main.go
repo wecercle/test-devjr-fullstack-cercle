@@ -6,8 +6,8 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	_ "github.com/wecercle/cercle-test-devjr/cmd/api/docs"
-	"github.com/wecercle/cercle-test-devjr/cmd/api/v1/app"
+	_ "github.com/wecercle/test-devjr-fullstack-cercle/cmd/api/docs"
+	"github.com/wecercle/test-devjr-fullstack-cercle/cmd/api/v1/app"
 )
 
 // setupCORS é uma função auxiliar para configurar o middleware CORS no router Gin, permitindo solicitações de qualquer origem e métodos comuns.

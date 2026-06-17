@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/dto/output"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/mapper"
-	queryRepo "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/repository/query"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/dto/output"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/mapper"
+	queryRepo "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/repository/query"
 )
 
 type ListRetailerUseCase struct {

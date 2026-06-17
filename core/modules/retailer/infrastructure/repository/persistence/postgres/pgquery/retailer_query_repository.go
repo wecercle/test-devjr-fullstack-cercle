@@ -5,10 +5,10 @@ import (
 	"database/sql"
 
 	"github.com/google/uuid"
-	databaseQuery "github.com/wecercle/cercle-test-devjr/core/database/postgres/query/sqlc"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/aggregate"
-	domainException "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/exception"
-	sharedInfrastructure "github.com/wecercle/cercle-test-devjr/core/modules/shared/infrastructure"
+	databaseQuery "github.com/wecercle/test-devjr-fullstack-cercle/core/database/postgres/query/sqlc"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/aggregate"
+	domainException "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/exception"
+	sharedInfrastructure "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/infrastructure"
 )
 
 type RetailerQueryRepository struct {

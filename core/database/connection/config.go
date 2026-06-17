@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
-	databaseQuery "github.com/wecercle/cercle-test-devjr/core/database/postgres/query/sqlc"
+	databaseQuery "github.com/wecercle/test-devjr-fullstack-cercle/core/database/postgres/query/sqlc"
 )
 
 var (

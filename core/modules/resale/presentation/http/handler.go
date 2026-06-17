@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	httpresponse "github.com/wecercle/cercle-test-devjr/core/modules/shared/presentation/http/response"
+	httpresponse "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/presentation/http/response"
 )
 
 type Handler struct{}

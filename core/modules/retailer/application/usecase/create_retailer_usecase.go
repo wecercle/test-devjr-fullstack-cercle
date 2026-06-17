@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/dto/input"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/dto/output"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/dto/validate"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/mapper"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/aggregate"
-	commandRepo "github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/repository/command"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/dto/input"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/dto/output"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/dto/validate"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/mapper"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/aggregate"
+	commandRepo "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/repository/command"
 )
 
 type CreateRetailerUseCase struct {

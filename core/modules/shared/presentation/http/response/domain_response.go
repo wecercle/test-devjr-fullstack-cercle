@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	sharedexception "github.com/wecercle/cercle-test-devjr/core/modules/shared/domain/exception"
+	sharedexception "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/domain/exception"
 )
 
 // DomainFailure é uma função auxiliar para responder a falhas usando o código de erro do domínio quando disponível.

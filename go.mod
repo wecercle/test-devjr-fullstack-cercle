@@ -1,4 +1,4 @@
-module github.com/wecercle/cercle-test-devjr
+module github.com/wecercle/test-devjr-fullstack-cercle
 
 go 1.25.4
 

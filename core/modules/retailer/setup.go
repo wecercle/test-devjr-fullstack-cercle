@@ -1,12 +1,12 @@
 package retailer
 
 import (
-	databaseQuery "github.com/wecercle/cercle-test-devjr/core/database/postgres/query/sqlc"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/mapper"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/usecase"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/infrastructure/repository/persistence/postgres/pgcommand"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/infrastructure/repository/persistence/postgres/pgquery"
-	retailerhttp "github.com/wecercle/cercle-test-devjr/core/modules/retailer/presentation/http"
+	databaseQuery "github.com/wecercle/test-devjr-fullstack-cercle/core/database/postgres/query/sqlc"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/mapper"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/usecase"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/infrastructure/repository/persistence/postgres/pgcommand"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/infrastructure/repository/persistence/postgres/pgquery"
+	retailerhttp "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/presentation/http"
 )
 
 // Container agrupa as dependências do módulo Retailer

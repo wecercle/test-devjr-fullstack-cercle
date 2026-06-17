@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/dto/input"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/application/usecase"
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/exception"
-	httpresponse "github.com/wecercle/cercle-test-devjr/core/modules/shared/presentation/http/response"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/dto/input"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/application/usecase"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/exception"
+	httpresponse "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/presentation/http/response"
 )
 
 type Handler struct {

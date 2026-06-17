@@ -2,7 +2,7 @@ package valueobject
 
 import (
 	"github.com/google/uuid"
-	"github.com/wecercle/cercle-test-devjr/core/modules/shared/domain/exception"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/domain/exception"
 )
 
 // UUID representa um identificador único validado como UUID v4, reutilizável em qualquer módulo.

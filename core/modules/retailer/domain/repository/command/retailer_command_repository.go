@@ -3,7 +3,7 @@ package command
 import (
 	"context"
 
-	"github.com/wecercle/cercle-test-devjr/core/modules/retailer/domain/aggregate"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/domain/aggregate"
 )
 
 // RetailerCommandRepository definee a interface de repositório de comando para o agregado Retailer.
