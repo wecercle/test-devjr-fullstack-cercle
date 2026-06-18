@@ -106,11 +106,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
+        "204":
           description: Item cancelled successfully
-          schema:
-            additionalProperties: true
-            type: object
         "400":
           description: Bad request
           schema:
