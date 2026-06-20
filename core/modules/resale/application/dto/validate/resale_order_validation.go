@@ -14,3 +14,13 @@ func ValidateOrderID(id string) error {
 	}
 	return nil
 }
+
+func ValidateOrderItemID(id string) error {
+	if id == "" {
+		return domainException.ErrInvalidOrderItemID
+	}
+	if _, err := uuid.Parse(id); err != nil {
+		return domainException.ErrInvalidOrderItemID
+	}
+	return nil
+}
