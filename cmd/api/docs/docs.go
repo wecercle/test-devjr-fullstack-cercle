@@ -48,8 +48,10 @@ const docTemplate = `{
                     "200": {
                         "description": "Order items retrieved successfully",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/output.OrderItemOutputDTO"
+                            }
                         }
                     },
                     "400": {
@@ -119,12 +121,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Item cancelled successfully",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
+                    "204": {
+                        "description": "Item cancelled successfully"
                     },
                     "400": {
                         "description": "Bad request",
@@ -452,6 +450,35 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "trade_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "output.OrderItemOutputDTO": {
+            "type": "object",
+            "properties": {
+                "amount_value": {
+                    "type": "string"
+                },
+                "fk_resale_order_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "shipping_code": {
+                    "type": "string"
+                },
+                "shipping_status": {
+                    "type": "string"
+                },
+                "sku": {
                     "type": "string"
                 }
             }

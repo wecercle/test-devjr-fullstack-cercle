@@ -63,6 +63,6 @@ swagger:
 	@echo ">> Diretórios de busca: cmd/api e handlers/dtos"
 	@echo ">> Saída: cmd/api/docs"
 	swag init -g main.go \
-		-d cmd/api,core/modules/resale/presentation/http,core/modules/retailer/presentation/http,core/modules/retailer/application/dto/input,core/modules/retailer/application/dto/output \
+		-d cmd/api,core/modules/resale/presentation/http,core/modules/resale/application/dto/output,core/modules/retailer/presentation/http,core/modules/retailer/application/dto/input,core/modules/retailer/application/dto/output \
 		-o cmd/api/docs
 	@echo ">> Documentação Swagger gerada com sucesso."
