@@ -1,6 +1,18 @@
+-- name: ExistsOrderByCPFAndOrderID :one
+SELECT EXISTS (
+    SELECT 1
+    FROM cercle_test.resale_order ro
+    JOIN cercle_test.users u ON u.id = ro.fk_users_id
+    WHERE ro.id = @order_id
+      AND u.document_number = @document_number
+      AND ro.deleted_at IS NULL
+      AND u.deleted_at IS NULL
+) AS exists;
+
 -- name: SelectOrderItemsByCPFAndOrderID :many
 SELECT
     roi.id,
+    roi.fk_resale_order_id,
     roi.sku,
     roi.name,
     roi.quantity,
@@ -12,11 +24,32 @@ JOIN cercle_test.resale_order ro ON ro.id = roi.fk_resale_order_id
 JOIN cercle_test.users u ON u.id = ro.fk_users_id
 WHERE ro.id = @order_id
   AND u.document_number = @document_number
+  AND roi.deleted_at IS NULL
+  AND ro.deleted_at IS NULL
+  AND u.deleted_at IS NULL
 ORDER BY roi.created_at ASC;
 
--- name: UpdateOrderItemShippingStatus :execrows
+-- name: SelectOrderItemByOrderIDAndItemID :one
+SELECT
+    roi.id,
+    roi.fk_resale_order_id,
+    roi.sku,
+    roi.name,
+    roi.quantity,
+    roi.amount_value,
+    roi.shipping_code,
+    roi.shipping_status,
+    roi.delivered_at
+FROM cercle_test.resale_order_item roi
+WHERE roi.fk_resale_order_id = @order_id
+  AND roi.id = @item_id
+  AND roi.deleted_at IS NULL;
+
+-- name: MarkOrderItemAsReturned :execrows
 UPDATE cercle_test.resale_order_item
-SET shipping_status = @shipping_status,
+SET shipping_status = 'RETURNED',
     updated_at = NOW()
 WHERE fk_resale_order_id = @resale_order_id
-  AND id = @id;
+  AND id = @id
+  AND deleted_at IS NULL
+  AND shipping_status = 'DELIVERED';
