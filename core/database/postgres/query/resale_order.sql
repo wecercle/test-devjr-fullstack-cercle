@@ -1,6 +1,7 @@
 -- name: SelectOrderItemsByCPFAndOrderID :many
 SELECT
     roi.id,
+    roi.fk_resale_order_id,
     roi.sku,
     roi.name,
     roi.quantity,
@@ -12,11 +13,32 @@ JOIN cercle_test.resale_order ro ON ro.id = roi.fk_resale_order_id
 JOIN cercle_test.users u ON u.id = ro.fk_users_id
 WHERE ro.id = @order_id
   AND u.document_number = @document_number
+  AND roi.deleted_at IS NULL
 ORDER BY roi.created_at ASC;
+
+-- name: SelectOrderItemByIDAndOrderIDAndCPF :one
+SELECT
+    roi.id,
+    roi.fk_resale_order_id,
+    roi.sku,
+    roi.name,
+    roi.quantity,
+    roi.amount_value,
+    roi.shipping_code,
+    roi.shipping_status,
+    roi.delivered_at
+FROM cercle_test.resale_order_item roi
+JOIN cercle_test.resale_order ro ON ro.id = roi.fk_resale_order_id
+JOIN cercle_test.users u ON u.id = ro.fk_users_id
+WHERE roi.id = @id
+  AND roi.fk_resale_order_id = @resale_order_id
+  AND u.document_number = @document_number
+  AND roi.deleted_at IS NULL;
 
 -- name: UpdateOrderItemShippingStatus :execrows
 UPDATE cercle_test.resale_order_item
 SET shipping_status = @shipping_status,
     updated_at = NOW()
 WHERE fk_resale_order_id = @resale_order_id
-  AND id = @id;
+  AND id = @id
+  AND deleted_at IS NULL;
