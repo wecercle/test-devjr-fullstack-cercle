@@ -4,44 +4,53 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	httpresponse "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/presentation/http/response"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/application/usecase"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/domain/exception"
 )
 
-type Handler struct{}
-
-func NewHandler() *Handler { return &Handler{} }
-
-// GetOrderItemsByCPFAndOrderID godoc
-// @Summary List order items by CPF and order ID
-// @Description Returns all items of a specific order identified by user CPF and order ID
-// @Tags Resale
-// @Accept json
-// @Produce json
-// @Param cpf path string true "User CPF (digits only, 11 characters)"
-// @Param order_id path string true "Order ID (UUID)"
-// @Success 200 {object} map[string]interface{} "Order items retrieved successfully"
-// @Failure 400 {object} map[string]string "Bad request"
-// @Failure 404 {object} map[string]string "Order not found"
-// @Failure 500 {object} map[string]string "Internal server error"
-// @Router /v1/app/users/{cpf}/orders/{order_id}/items [get]
-func (h *Handler) GetOrderItemsByCPFAndOrderID(c *gin.Context) {
-	httpresponse.Success(c, http.StatusOK, "TODO: /v1/app/users/:cpf/orders/:order_id/items")
+type Handler struct {
+	getOrderItemsUC   *usecase.GetOrderItemsUseCase
+	cancelOrderItemUC *usecase.CancelOrderItemUseCase
 }
 
-// CancelOrderItem godoc
-// @Summary Cancel an order item
-// @Description Cancels a specific item of an order identified by user CPF, order ID and item ID
-// @Tags Resale
-// @Accept json
-// @Produce json
-// @Param cpf path string true "User CPF (digits only, 11 characters)"
-// @Param order_id path string true "Order ID (UUID)"
-// @Param item_id path string true "Order Item ID (UUID)"
-// @Success 200 {object} map[string]interface{} "Item cancelled successfully"
-// @Failure 400 {object} map[string]string "Bad request"
-// @Failure 404 {object} map[string]string "Order or item not found"
-// @Failure 500 {object} map[string]string "Internal server error"
-// @Router /v1/app/users/{cpf}/orders/{order_id}/items/{item_id}/cancel [put]
+func NewHandler(getUC *usecase.GetOrderItemsUseCase, cancelUC *usecase.CancelOrderItemUseCase) *Handler {
+	return &Handler{
+		getOrderItemsUC:   getUC,
+		cancelOrderItemUC: cancelUC,
+	}
+}
+
+func (h *Handler) GetOrderItemsByCPFAndOrderID(c *gin.Context) {
+	cpf := c.Param("cpf")
+	orderID := c.Param("order_id")
+
+	items, err := h.getOrderItemsUC.Execute(c.Request.Context(), cpf, orderID)
+	if err != nil {
+		if err.Error() == exception.ErrOrderNotFound.Error() {
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": items})
+}
+
 func (h *Handler) CancelOrderItem(c *gin.Context) {
-	httpresponse.Success(c, http.StatusOK, "TODO: /v1/app/users/:cpf/orders/:order_id/items/:item_id/cancel")
+	cpf := c.Param("cpf")
+	orderID := c.Param("order_id")
+	itemID := c.Param("item_id")
+
+	err := h.cancelOrderItemUC.Execute(c.Request.Context(), cpf, orderID, itemID)
+	if err != nil {
+		if err.Error() == exception.ErrOrderNotFound.Error() {
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.Status(http.StatusNoContent)
 }

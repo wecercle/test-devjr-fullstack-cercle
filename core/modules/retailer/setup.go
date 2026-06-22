@@ -9,12 +9,10 @@ import (
 	retailerhttp "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/retailer/presentation/http"
 )
 
-// Container agrupa as dependências do módulo Retailer
 type Container struct {
 	Handler *retailerhttp.Handler
 }
 
-// Setup inicializa o módulo Retailer com dependency injection manual
 func Setup(querier *databaseQuery.Queries) *Container {
 	// Infrastructure Layer
 	queryRepo := pgquery.NewRetailerQueryRepository(querier)
