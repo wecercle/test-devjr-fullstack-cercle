@@ -1,15 +1,23 @@
 package http
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/application/domain/exception"
+	"github.com/wecercle/test-devjr-fullstack-cercle/core/modules/resale/application/usecase"
 	httpresponse "github.com/wecercle/test-devjr-fullstack-cercle/core/modules/shared/presentation/http/response"
 )
 
-type Handler struct{}
+type Handler struct {
+	listUseCase   *usecase.ListResaleOrderItemsUseCase
+	cancelUseCase *usecase.CancelResaleOrderItemUseCase
+}
 
-func NewHandler() *Handler { return &Handler{} }
+func NewHandler(listUseCase *usecase.ListResaleOrderItemsUseCase, cancelUseCase *usecase.CancelResaleOrderItemUseCase) *Handler {
+	return &Handler{listUseCase: listUseCase, cancelUseCase: cancelUseCase}
+}
 
 // GetOrderItemsByCPFAndOrderID godoc
 // @Summary List order items by CPF and order ID
@@ -25,7 +33,19 @@ func NewHandler() *Handler { return &Handler{} }
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /v1/app/users/{cpf}/orders/{order_id}/items [get]
 func (h *Handler) GetOrderItemsByCPFAndOrderID(c *gin.Context) {
-	httpresponse.Success(c, http.StatusOK, "TODO: /v1/app/users/:cpf/orders/:order_id/items")
+	cpf := c.Param("cpf")
+	orderID := c.Param("order_id")
+
+	result, err := h.listUseCase.Execute(c.Request.Context(), orderID, cpf)
+	if err != nil {
+		if errors.Is(err, exception.ErrResaleOrderNotFound) {
+			httpresponse.DomainNotFound(c, err)
+			return
+		}
+		httpresponse.InternalServerError(c, err.Error())
+		return
+	}
+	httpresponse.Success(c, http.StatusOK, result.Items)
 }
 
 // CancelOrderItem godoc
@@ -43,5 +63,23 @@ func (h *Handler) GetOrderItemsByCPFAndOrderID(c *gin.Context) {
 // @Failure 500 {object} map[string]string "Internal server error"
 // @Router /v1/app/users/{cpf}/orders/{order_id}/items/{item_id}/cancel [put]
 func (h *Handler) CancelOrderItem(c *gin.Context) {
-	httpresponse.Success(c, http.StatusOK, "TODO: /v1/app/users/:cpf/orders/:order_id/items/:item_id/cancel")
+	cpf := c.Param("cpf")
+	orderID := c.Param("order_id")
+	itemID := c.Param("item_id")
+
+	err := h.cancelUseCase.Execute(c.Request.Context(), orderID, itemID, cpf)
+	if err != nil {
+		if errors.Is(err, exception.ErrCancelWindowExpired) {
+			httpresponse.DomainBadRequest(c, err)
+			return
+		}
+		if errors.Is(err, exception.ErrResaleOrderItemNotFound) ||
+			errors.Is(err, exception.ErrResaleOrderNotFound) {
+			httpresponse.DomainNotFound(c, err)
+			return
+		}
+		httpresponse.InternalServerError(c, err.Error())
+		return
+	}
+	c.Status(http.StatusNoContent)
 }
