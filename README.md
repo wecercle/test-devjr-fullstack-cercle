@@ -1,3 +1,7 @@
+# 🔴 [FINALIZADO - Não ACEITA MAIS PR]
+
+# Obrigado a Todos(as)!
+
 # Cercle Test DevJR
 
 Guia rápido para rodar o projeto localmente.
